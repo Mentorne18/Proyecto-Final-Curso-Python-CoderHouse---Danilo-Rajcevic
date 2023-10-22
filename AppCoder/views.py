@@ -46,14 +46,10 @@ from .forms import *
 
 def inicio(request):
     avatares = Avatar.objects.filter(user=request.user.id)
+    avatar_url = avatares[0].imagen.url if avatares else None
     
-    if avatares.exists():
-        url = avatares[0].imagen.url
-    else:
-        # Puedes definir una URL de imagen por defecto o mostrar un mensaje de que no hay avatar.
-        url = '/ruta/imagen/por/defecto.jpg'
-    
-    return render(request, "appCoder/index.html", {"url": url})
+    return render(request, "appCoder/index.html", {"avatar_url": avatar_url})
+
 
     
 
