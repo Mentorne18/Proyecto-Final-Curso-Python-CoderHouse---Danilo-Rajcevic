@@ -57,7 +57,7 @@
 
                 <div class="dropdown">
                     {% if request.user.is_authenticated %}
-                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown">Hola, {{ user.username }}</p>
+                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown"><img height="40px" src="{{url}}">Hola, {{ user.username }}</p>
                         <div class="dropdown-menu">
                             <!-- Agrega las opciones del menú desplegable -->
                             <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->
@@ -231,28 +231,18 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
-                        <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">About</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Contact</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Terms of Use</a></li>
-                            <li class="list-inline-item">⋅</li>
-                            <li class="list-inline-item"><a href="#!">Privacy Policy</a></li>
-                        </ul>
+                        
                         <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2023. All Rights Reserved.</p>
                     </div>
                     <div class="col-lg-6 h-100 text-center text-lg-end my-auto">
                         <ul class="list-inline mb-0">
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-facebook fs-3"></i></a>
-                            </li>
-                            <li class="list-inline-item me-4">
-                                <a href="#!"><i class="bi-twitter fs-3"></i></a>
+                            
+                            <li class="list-inline-item">
+                                <a href="https://www.instagram.com/danilo_rajcevic/"><i class="bi-instagram fs-3"></i></a>
+                                
                             </li>
                             <li class="list-inline-item">
-                                <a href="#!"><i class="bi-instagram fs-3"></i></a>
-                            </li>
+                                <a href="https://www.linkedin.com/in/danilo-rajcevic-31b543224/"><i class="bi-linkedin fs-3"></i></a>
                         </ul>
                     </div>
                 </div>

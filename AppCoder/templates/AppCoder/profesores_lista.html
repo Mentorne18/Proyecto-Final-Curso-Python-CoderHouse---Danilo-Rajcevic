@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 
 {% load static %}
@@ -50,20 +49,21 @@
             <div class="container">
                 
                 <a class="btn btn-primary" href="{% url 'Inicio' %}">Inicio</a>
-                <a class="btn btn-primary" href="{% url 'Cursos' %}">Cursos</a>
+                <a class="btn btn-primary" href="{% url 'List' %}">Cursos</a>
                 <a class="btn btn-primary" href="{% url 'Profesores' %}">Profesores</a>
                 <a class="btn btn-primary" href="{% url 'Estudiantes' %}">Estudiantes</a>
-                <a class="btn btn-primary" href="{% url 'Entregables' %}">Entregables</a>
+                <a class="btn btn-primary" href="{% url 'mensajes' %}">Contacto</a>
                 <a class="btn btn-primary" href="{% url 'AcercaDeMi' %}">Acerca de Mí</a>
 
 
                 <div class="dropdown">
                     {% if request.user.is_authenticated %}
+                    
                         <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown"><img height="40px" src="{{url}}">Hola, {{ user.username }}</p>
                         <div class="dropdown-menu">
                             <!-- Agrega las opciones del menú desplegable -->
                             <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->
-                            <a class="dropdown-item" href="#">Opción 1</a> 
+                            <a class="dropdown-item" href="agregarAvatar">Cambiar Avatar</a> 
                             <a class="dropdown-item" href="{% url 'EditarPerfil' %}">Editar Perfil</a> 
                             <!-- Puedes agregar más opciones según tus necesidades -->
                         </div>
@@ -81,8 +81,22 @@
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             <!-- Page heading-->
-                            <h1 class="mb-5">CURSOS</h1>
+                            <h1 class="mb-5">Bienvenido a Conectar.Idiomas</h1>
                             <h2>"Tu viaje multilingüe comienza aquí"</h2>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                            <div class="text-center">
+                            
+                                <img height="40px" src="{{url}}">
+                                <h3>Llegaste a un mundo lleno de nuevas oportunidades {{user.username}}</h3>
+
+                            </div>
+                            
                            
                             </form>
                         </div>
@@ -90,44 +104,22 @@
                 </div>
             </div>
         </header>
-
-        {% if miFormulario.errors %}
-
-    <p style="color: red;">Estan mal los datos, revisar.</p>
-
-    {% endif %}
-
-    <form action="" method="POST">{% csrf_token %}
-
-        <!-- Acá está la magia de Django -->
-
-        <table>
-
-            {{ miFormulario.as_table }}
-
-        </table>
-
-        <input type="submit" value="Enviar">
+        
+        <h2>Profesores</h2>
+<ul>
+    {% for profesor in profesores %}
+        <li>
+            {{ profesor.nombre }} {{ profesor.apellido }} - {{ profesor.email }} - {{ profesor.profesion }}
+            {% if user.is_superuser %}
+                
+                <a href="{% url 'EditarProfesor' profesor.nombre %}">Editar</a>
+                <a href="{% url 'EliminarProfesor' profesor.nombre %}">Borrar</a>
 
 
-    </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+
     
-    <h1>Cursos de la Plataforma</h1>
-    <ul>
-        {% for curso in object_list %}
 
-            <li>
-                <p>NOMBRE: {{ curso.nombre }} </p>
-                <p>
-
-                    <a href="{% url 'Detail' curso.id %}">Ver</a>
-                    <a href="{% url 'Edit' curso.id %}">Editar</a>
-                    <a href="{% url 'Delete' curso.id %}">Borrar</a>
-
-                </p>
-
-
-            </li>
-
-        {% endfor %}
-    </ul>

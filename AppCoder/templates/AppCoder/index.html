@@ -58,7 +58,8 @@
 
                 <div class="dropdown">
                     {% if request.user.is_authenticated %}
-                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown">Hola, {{ user.username }}</p>
+                    
+                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown"><img height="40px" src="{{url}}">Hola, {{ user.username }}</p>
                         <div class="dropdown-menu">
                             <!-- Agrega las opciones del menú desplegable -->
                             <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->
@@ -82,6 +83,20 @@
                             <!-- Page heading-->
                             <h1 class="mb-5">Bienvenido a Conectar.Idiomas</h1>
                             <h2>"Tu viaje multilingüe comienza aquí"</h2>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+
+                            <div class="text-center">
+                            
+                                <img height="40px" src="{{url}}">
+                                <h3>Llegaste a un mundo lleno de nuevas oportunidades {{user.username}}</h3>
+
+                            </div>
+                            
                            
                             </form>
                         </div>

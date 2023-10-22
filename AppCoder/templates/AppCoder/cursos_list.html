@@ -58,7 +58,7 @@
 
                 <div class="dropdown">
                     {% if request.user.is_authenticated %}
-                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown">Hola, {{ user.username }}</p>
+                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown"><img height="40px" src="{{url}}">Hola, {{ user.username }}</p>
                         <div class="dropdown-menu">
                             <!-- Agrega las opciones del menú desplegable -->
                             <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->

@@ -37,6 +37,7 @@ urlpatterns = [
     path('AcercaDeMi/', views.sobre_mi, name='AcercaDeMi'),
     path("mensajes/", views.vista_mensajes, name="mensajes"),
     path("guardar_mensaje/", views.guardar_mensaje, name="guardar_mensaje"),
+    path('profesores_lista/', views.profesores_lista, name='profesores_lista'),
 
 
 ]

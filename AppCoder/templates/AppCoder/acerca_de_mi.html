@@ -59,7 +59,7 @@
 
                 <div class="dropdown">
                     {% if request.user.is_authenticated %}
-                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown">Hola, {{ user.username }}</p>
+                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown"><img height="40px" src="{{url}}">Hola, {{ user.username }}</p>
                         <div class="dropdown-menu">
                             <!-- Agrega las opciones del menú desplegable -->
                             <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->
@@ -92,10 +92,11 @@
     <section class="container my-5">
         <div class="row">
             <div class="col-md-6">
-                <img src="media/personal.jpeg" alt="asd" class="img-fluid" />
+                <img src="{% static 'sobremi.jpeg' %}" alt="Descripción de la imagen" class="img-fluid" />
 
             </div>
             <div class="col-md-6">
+                <div class="text-center"></div>
                 <h2>Presentación:</h2>
                 <p>
                     Soy una persona apasionada por la informática y estoy buscando desarrollarme como
@@ -110,5 +111,6 @@
             </div>
         </div>
     </section>
+    
 </main>
 

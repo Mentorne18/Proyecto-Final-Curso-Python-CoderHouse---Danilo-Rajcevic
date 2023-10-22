@@ -46,8 +46,8 @@ from .forms import *
 
 def inicio(request):
     avatares = Avatar.objects.filter(user=request.user.id)
-    url = avatares[0].imagen.url if avatares else ""  # Manejar el caso sin avatares
-    return render(request, "appCoder/index.html", {"url": url})
+    
+    return render(request, "appCoder/index.html", {"url":avatares[0].imagen.url})
 
 # def cursos(request):
     
@@ -74,7 +74,9 @@ def estudiantes(request):
     else:
         miFormulario = EstudianteFormulario()
  
-    return render(request, "AppCoder/estudiantes.html", {"miFormulario": miFormulario})
+    estudiantes = Estudiante.objects.all()
+    
+    return render(request, "AppCoder/estudiantes.html", {"miFormulario": miFormulario, "estudiantes": estudiantes})
     
 @login_required 
 def entregables(request):
@@ -180,7 +182,7 @@ def eliminarProfesor(request, profesor_nombre):
  
     contexto = {"profesores": profesores}
  
-    return render(request, "AppCoder/leerProfesores.html", contexto)
+    return render(request, "AppCoder/index.html", contexto)
 
 @login_required 
 def editarProfesor(request, profesor_nombre):
@@ -208,7 +210,7 @@ def editarProfesor(request, profesor_nombre):
             
             profesor.save()
             
-            return render(request, "AppCoder/index.html") # Aca hacemos que vuelva al inicio despues de  editar
+            return redirect("Inicio") # Aca hacemos que vuelva al inicio despues de  editar
         
     #En caso de que no sea post:
     
@@ -380,6 +382,25 @@ def guardar_mensaje(request):
             return redirect('mensajes')
     # Manejar el caso en que el formulario no sea válido
     return redirect('mensajes')
+
+@login_required
+def profesores_lista(request):
+    profesores = Profesor.objects.all()
+    return render(request, "AppCoder/profesores_lista.html", {"profesores": profesores})
+
+
+def registrarProfesor(request):
+    if request.method == "POST":
+        miFormulario = ProfesorFormulario(request.POST)
+
+        if miFormulario.is_valid():
+            miFormulario.save()  # Guarda el profesor en la base de datos
+            return redirect('Inicio')  # Redirige al usuario a la página de inicio después de registrar al profesor
+
+    else:
+        miFormulario = ProfesorFormulario()
+
+    return render(request, "AppCoder/index.html", {"miFormulario": miFormulario})
 
 
 

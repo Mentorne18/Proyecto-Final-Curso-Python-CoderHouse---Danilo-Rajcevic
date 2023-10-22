@@ -54,7 +54,7 @@
                 <a class="btn btn-primary" href="{% url 'List' %}">Cursos</a>
                 <a class="btn btn-primary" href="{% url 'Profesores' %}">Profesores</a>
                 <a class="btn btn-primary" href="{% url 'Estudiantes' %}">Estudiantes</a>
-                <a class="btn btn-primary" href="{% url 'Entregables' %}">Entregables</a>
+                <a class="btn btn-primary" href="{% url 'mensajes' %}">Contacto</a>
                 <a class="btn btn-primary" href="{% url 'AcercaDeMi' %}">Acerca de Mí</a>
 
 
@@ -92,6 +92,7 @@
             </div>
         </header>
         <h2>Dejanos tu mensaje:</h2>
+        
         <form method="post" action="{% url 'guardar_mensaje' %}">
             {% csrf_token %}
             <label for="mensaje">Mensaje:</label>
