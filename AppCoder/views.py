@@ -17,6 +17,7 @@ from django.contrib.auth.models import User
 
 
 
+
 # Create your views here.
 
 
@@ -39,12 +40,11 @@ from django.contrib.auth.models import User
 # def entregables(request):
     
 #     return HttpResponse("vista entregables")    ESTO YA NO VA PORQUE LO REEMPLAZAMOS POR EL RENDER DE LA PLANTILLA
-@login_required 
+
 def inicio(request):
-    
     avatares = Avatar.objects.filter(user=request.user.id)
-    
-    return render(request, "appCoder/index.html", {"url": avatares[0].imagen.url})
+    url = avatares[0].imagen.url if avatares else ""  # Manejar el caso sin avatares
+    return render(request, "appCoder/index.html", {"url": url})
 
 # def cursos(request):
     
@@ -53,7 +53,7 @@ def inicio(request):
 # def profesores(request):
     
 #     return render(request, "appCoder/profesores.html")
-
+@login_required 
 def estudiantes(request):
     
     # return render(request, "appCoder/estudiantes.html")
@@ -73,7 +73,7 @@ def estudiantes(request):
  
     return render(request, "AppCoder/estudiantes.html", {"miFormulario": miFormulario})
     
-
+@login_required 
 def entregables(request):
 
     # return render(request, "appCoder/entregables.html")
@@ -92,7 +92,7 @@ def entregables(request):
         miFormulario = EntregableFormulario()
  
     return render(request, "AppCoder/entregables.html", {"miFormulario": miFormulario})
-
+@login_required 
 def cursos(request):
  
       if request.method == "POST":
@@ -109,7 +109,7 @@ def cursos(request):
             miFormulario = CursoFormulario()
  
       return render(request, "AppCoder/cursos.html", {"miFormulario": miFormulario})
-  
+@login_required   
 def profesores(request):
       
     if request.method == "POST":
@@ -135,11 +135,11 @@ def profesores(request):
             
     return render(request, "AppCoder/profesores.html", {"miFormulario":miFormulario})
 
-
+@login_required 
 def busquedaCamada(request):
     
     return render(request, "AppCoder/busquedaCamada.html")
-
+@login_required 
 def buscar(request):
     
     #respuesta = f"Estoy buscando la camada N°: {request.GET['camada'] }"
@@ -157,7 +157,7 @@ def buscar(request):
     
     return HttpResponse(respuesta)
 
-
+@login_required 
 def leerProfesores(request):
 
       profesores = Profesor.objects.all() #trae todos los profesores
@@ -166,7 +166,7 @@ def leerProfesores(request):
 
       return render(request, "AppCoder/leerProfesores.html",contexto)
 
-
+@login_required 
 def eliminarProfesor(request, profesor_nombre):
  
     profesor = Profesor.objects.get(nombre=profesor_nombre)
@@ -179,7 +179,7 @@ def eliminarProfesor(request, profesor_nombre):
  
     return render(request, "AppCoder/leerProfesores.html", contexto)
 
-
+@login_required 
 def editarProfesor(request, profesor_nombre):
     
     #recibe el nombre del profesor que vamos a modificar
@@ -248,54 +248,50 @@ class CursoDelete(LoginRequiredMixin, DeleteView):
 
 def login_request(request):
     
+    mensaje = ""  # Inicializa el mensaje en blanco
     if request.method == "POST":
-        form = AuthenticationForm(request, data= request.POST)
-        
+        form = AuthenticationForm(request, data=request.POST)
+
         if form.is_valid():
             usuario = form.cleaned_data.get("username")
             contra = form.cleaned_data.get("password")
-            
+
             user = authenticate(username=usuario, password=contra)
-            
-            
+
             if user is not None:
                 login(request, user)
-                
-                return render(request, "AppCoder/index.html", {"mensaje":f"Bienvenido {usuario}"})
-            
+                # No redirigir con mensaje aquí, se mostrará en la vista de inicio
+                return redirect("Inicio")
             else:
-                
-                return render(request, "AppCoder/index.html", {"mensaje": "Error, datos incorrectos"})
+                mensaje = "Error, datos incorrectos"
+    
+                return render(request, "AppCoder/login.html", {"mensaje": mensaje, "form": form})
+
             
         
         else:
             
-                return render(request, "AppCoder/index.html", {"mensaje":"Error, formulario erroneo"})
+                mensaje = "Error, datos incorrectos"
+    
+                return render(request, "AppCoder/login.html", {"mensaje": mensaje, "form": form})
             
     form = AuthenticationForm()
     
     return render(request, "AppCoder/login.html", {"form":form})
 
+    form = AuthenticationForm()
+    return render(request, "AppCoder/login.html", {"mensaje": mensaje, "form": form})
 
 def register(request):
-    
     if request.method == "POST":
-        
-        #form = UserCreationForm(request.POST)
         form = UserRegisterForm(request.POST)
         if form.is_valid():
-            
-            username = form.cleaned_data["username"]
-            form.save()
-            return render(request, "AppCoder/index.html", {"mensaje":"Creacion de usuario exitosa, bienvenido"})
-        
-        
+            user = form.save()
+            login(request, user)  #tuve que agregar user=form.save() para usar correctamente el login(request,user)
+            return redirect('Inicio')  # Redirige a la página de inicio después de iniciar sesión
     else:
-        
-        #form = UserCreationForm()
-        form =UserRegisterForm()
-        
-    return render(request,"AppCoder/registro.html", {"form":form})
+        form = UserRegisterForm()
+    return render(request, "AppCoder/registro.html", {"form": form})
 
 
 @login_required
@@ -349,3 +345,13 @@ def agregarAvatar(request):
             miFormulario= AvatarFormulario() #Formulario vacio para construir el html
 
       return render(request, "AppCoder/agregarAvatar.html", {"miFormulario":miFormulario})
+  
+
+def acerca_de_mi(request):
+    user_info = {
+        "nombre": "Tu nombre",
+        "descripcion": "Tu descripción",
+        # Agrega más información aquí si es necesario
+    }
+    return render(request, 'AppCoder/acerca_de_mi.html', {"user_info": user_info})
+

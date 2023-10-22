@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Conectar.Idiomas</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+                
+                <a class="btn btn-primary" href="{% url 'Inicio' %}">Inicio</a>
+                <a class="btn btn-primary" href="{% url 'Cursos' %}">Cursos</a>
+                <a class="btn btn-primary" href="{% url 'Profesores' %}">Profesores</a>
+                <a class="btn btn-primary" href="{% url 'Estudiantes' %}">Estudiantes</a>
+                <a class="btn btn-primary" href="{% url 'Entregables' %}">Entregables</a>
+                <a class="btn btn-primary" href="{% url 'acerca_de_mi' %}">Acerca de Mi</a>
+
+
+                {% if not request.user.is_authenticated %}
+                <a class="btn btn-primary" href="{% url 'Login' %}">INICIAR</a>
+                {% endif %}
+
+                {% if request.user.is_authenticated %}
+                <p class="text-muted small mb-4 mb-1g-0">Hola,{{user.username}}</p>
+                <a class="btn btn-primary" href="{% url 'Logout' %}">Logout</a>
+                {% endif %}
+
+
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container position-relative">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6">
+                        <div class="text-center text-white">
+                            <!-- Page heading-->
+                            <h1 class="mb-5">ACERCA DE MI</h1>
+                            
+                           
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="py-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Agrega tu imagen aquí -->
+                        <img src="{% static 'media/avatares/sobremi.jpeg' %}" alt="Tu imagen" width="200" height="200">
+                    </div>
+                    <div class="col-lg-6">
+                        <!-- Agrega tu descripción aquí -->
+                        <p>Soy una persona apasionada por la informática y estoy buscando desarrollarme como
+                            programador. Aunque actualmente no tengo experiencia directa en programación, mi
+                            disposición para aprender y adaptarme a nuevos desafíos me impulsa a buscar
+                            oportunidades para crecer en esta área. Estoy comprometido a seguir creciendo
+                            profesionalmente y estoy en busca de cursos que se adapten a mi horario laboral para
+                            adentrarme en el mundo de la programación. Estoy decidido a aprovechar al máximo
+                            cualquier oportunidad de aprendizaje que se me presente.
+                            </p>
+                    </div>
+                </div>
+            </div>
+        </section>
