@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 
 {% load static %}
@@ -19,29 +21,29 @@
         <link href="{% static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
 
         <style>
-            .dropdown {
-                position: relative;
-                display: inline-block;
-            }
-    
-            .dropdown-toggle::after {
-                content: '\25BC';
-                margin-left: 5px;
-                font-size: 5px;
-            }
-    
-            .dropdown-menu {
-                display: none;
-                position: absolute;
-                background-color: #fff;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-            }
-    
-            .dropdown:hover .dropdown-menu {
-                display: block;
-            }
-        </style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle::after {
+            content: '\25BC';
+            margin-left: 5px;
+            font-size: 5px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
     </head>
     <body>
         <!-- Navigation-->
@@ -49,12 +51,11 @@
             <div class="container">
                 
                 <a class="btn btn-primary" href="{% url 'Inicio' %}">Inicio</a>
-                <a class="btn btn-primary" href="{% url 'Cursos' %}">Cursos</a>
+                <a class="btn btn-primary" href="{% url 'List' %}">Cursos</a>
                 <a class="btn btn-primary" href="{% url 'Profesores' %}">Profesores</a>
                 <a class="btn btn-primary" href="{% url 'Estudiantes' %}">Estudiantes</a>
                 <a class="btn btn-primary" href="{% url 'Entregables' %}">Entregables</a>
                 <a class="btn btn-primary" href="{% url 'AcercaDeMi' %}">Acerca de Mí</a>
-                
 
 
                 <div class="dropdown">
@@ -69,46 +70,32 @@
                         </div>
                     {% endif %}
                 </div>
+                
 
 
             </div>
         </nav>
         <!-- Masthead-->
-<header class="masthead">
-    <div class="container position-relative">
-        <div class="row justify-content-center">
-            <div class="col-xl-6">
-                <div class="text-center text-white">
-                    <!-- Page heading-->
-                    <h1 class="mb-5">Acerca de mí</h1>
+        <header class="masthead">
+            <div class="container position-relative">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6">
+                        <div class="text-center text-white">
+                            <!-- Page heading-->
+                            <h1 class="mb-5">CONTACTO</h1>
+                            <h2>"Tu viaje multilingüe comienza aquí"</h2>
+                           
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
-
-<!-- Parte del código para la foto y la presentación -->
-<main>
-    <section class="container my-5">
-        <div class="row">
-            <div class="col-md-6">
-                <img src="media/personal.jpeg" alt="asd" class="img-fluid" />
-
-            </div>
-            <div class="col-md-6">
-                <h2>Presentación:</h2>
-                <p>
-                    Soy una persona apasionada por la informática y estoy buscando desarrollarme como
-                    programador. Aunque actualmente no tengo experiencia directa en programación, mi
-                    disposición para aprender y adaptarme a nuevos desafíos me impulsa a buscar
-                    oportunidades para crecer en esta área. Estoy comprometido a seguir creciendo
-                    profesionalmente y estoy en busca de cursos que se adapten a mi horario laboral para
-                    adentrarme en el mundo de la programación. Estoy decidido a aprovechar al máximo
-                    cualquier oportunidad de aprendizaje que se me presente.
-
-                </p>
-            </div>
-        </div>
-    </section>
-</main>
-
+        </header>
+        <h2>Dejanos tu mensaje:</h2>
+        <form method="post" action="{% url 'guardar_mensaje' %}">
+            {% csrf_token %}
+            <label for="mensaje">Mensaje:</label>
+            <textarea id="mensaje" name="mensaje" rows="4" cols="50"></textarea>
+            <br>
+            <button type="submit">Enviar Mensaje</button>
+        </form>

@@ -7,7 +7,7 @@ class CursoFormulario(forms.Form):
     
     #especificar los campos
     
-    curso = forms.CharField()
+    curso = forms.CharField(max_length=30)
     camada = forms.IntegerField()
     
     
@@ -68,3 +68,8 @@ class AvatarFormulario(forms.Form):
     #Especificar los campos
     
     imagen = forms.ImageField(required=True)
+    
+    
+    
+class MensajeForm(forms.Form):
+    mensaje = forms.CharField(widget=forms.Textarea(attrs={'rows': 4, 'cols': 50}))

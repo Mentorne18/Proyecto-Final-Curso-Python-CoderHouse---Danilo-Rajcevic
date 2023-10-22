@@ -33,8 +33,10 @@ urlpatterns = [
     path('nuevo/', views.CursoCreacion.as_view(), name='New'),
     path('editar/<int:pk>/', views.CursoUpdate.as_view(), name='Edit'),
     path('borrar/<int:pk>/', views.CursoDelete.as_view(), name='Delete'),
-    path("agregarAvatar", views.agregarAvatar, name ="AgregarAvatar"),
-    path('acerca_de_mi/', views.acerca_de_mi, name='acerca_de_mi'),
+    path("agregarAvatar/", views.agregarAvatar, name ="AgregarAvatar"),
+    path('AcercaDeMi/', views.sobre_mi, name='AcercaDeMi'),
+    path("mensajes/", views.vista_mensajes, name="mensajes"),
+    path("guardar_mensaje/", views.guardar_mensaje, name="guardar_mensaje"),
 
 
 ]

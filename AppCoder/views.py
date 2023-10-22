@@ -12,6 +12,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
+from .forms import *
+
+
 
 
 
@@ -231,19 +234,19 @@ class CursoDetalle(DetailView):
 class CursoCreacion(LoginRequiredMixin, CreateView):
     
     model = Curso
-    success_url= "/AppCoder/curso/list"
+    success_url= "/curso/list"
     fields = ["nombre", "camada"]
     
 class CursoUpdate(LoginRequiredMixin, UpdateView):
     
     model = Curso
-    success_url = "/AppCoder/curso/list"
+    success_url = "/curso/list"
     fields = ["nombre", "camada"]
     
 class CursoDelete(LoginRequiredMixin, DeleteView):
     
     model = Curso
-    success_url = "AppCoder/curso/list"
+    success_url = "/curso/list"
     
 
 def login_request(request):
@@ -346,12 +349,38 @@ def agregarAvatar(request):
 
       return render(request, "AppCoder/agregarAvatar.html", {"miFormulario":miFormulario})
   
+@login_required
+def sobre_mi(request):
+    return render(request, 'AppCoder/acerca_de_mi.html')
 
-def acerca_de_mi(request):
-    user_info = {
-        "nombre": "Tu nombre",
-        "descripcion": "Tu descripción",
-        # Agrega más información aquí si es necesario
-    }
-    return render(request, 'AppCoder/acerca_de_mi.html', {"user_info": user_info})
+
+@login_required
+def vista_mensajes(request):
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+        if form.is_valid():
+            mensaje = form.cleaned_data['mensaje']
+            nuevo_mensaje = Mensaje(mensaje=mensaje)
+            nuevo_mensaje.save()
+            
+    else:
+        form = MensajeForm()
+
+    return render(request, 'AppCoder/mensajes.html', {'form': form})
+
+@login_required
+def guardar_mensaje(request):
+    if request.method == 'POST':
+        form = MensajeForm(request.POST)
+        if form.is_valid():
+            mensaje = form.cleaned_data['mensaje']
+            nuevo_mensaje = Mensaje(mensaje=mensaje)
+            nuevo_mensaje.save()
+            # Puedes redirigir a otra página o hacer lo que necesites después de guardar el mensaje.
+            return redirect('mensajes')
+    # Manejar el caso en que el formulario no sea válido
+    return redirect('mensajes')
+
+
+
 

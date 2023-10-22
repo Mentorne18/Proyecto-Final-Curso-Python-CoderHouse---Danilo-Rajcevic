@@ -17,6 +17,31 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
+
+        <style>
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-toggle::after {
+                content: '\25BC';
+                margin-left: 5px;
+                font-size: 5px;
+            }
+    
+            .dropdown-menu {
+                display: none;
+                position: absolute;
+                background-color: #fff;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+    
+            .dropdown:hover .dropdown-menu {
+                display: block;
+            }
+        </style>
     </head>
     <body>
         <!-- Navigation-->
@@ -24,22 +49,24 @@
             <div class="container">
                 
                 <a class="btn btn-primary" href="{% url 'Inicio' %}">Inicio</a>
-                <a class="btn btn-primary" href="{% url 'Cursos' %}">Cursos</a>
+                <a class="btn btn-primary" href="{% url 'List' %}">Cursos</a>
                 <a class="btn btn-primary" href="{% url 'Profesores' %}">Profesores</a>
                 <a class="btn btn-primary" href="{% url 'Estudiantes' %}">Estudiantes</a>
-                <a class="btn btn-primary" href="{% url 'Entregables' %}">Entregables</a>
-                <a class="btn btn-primary" href="{% url 'acerca_de_mi' %}">Acerca de Mi</a>
+                <a class="btn btn-primary" href="{% url 'mensajes' %}">Contacto</a>
+                <a class="btn btn-primary" href="{% url 'AcercaDeMi' %}">Acerca de Mí</a>
 
-
-                {% if not request.user.is_authenticated %}
-                <a class="btn btn-primary" href="{% url 'Login' %}">INICIAR</a>
-                {% endif %}
-
-                {% if request.user.is_authenticated %}
-                    <img src="{{ request.user.avatar.imagen.url }}" />
-                    <p class="text-muted small mb-4 mb-lg-0">Hola, {{ user.username }}.</p>
-                    <a class="btn btn-primary" href="{% url 'Logout' %}">Logout</a>
-                {% endif %}
+                <div class="dropdown">
+                    {% if request.user.is_authenticated %}
+                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown">Hola, {{ user.username }}</p>
+                        <div class="dropdown-menu">
+                            <!-- Agrega las opciones del menú desplegable -->
+                            <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->
+                            <a class="dropdown-item" href="agregarAvatar">Cambiar Avatar</a> 
+                            <a class="dropdown-item" href="{% url 'EditarPerfil' %}">Editar Perfil</a> 
+                            <!-- Puedes agregar más opciones según tus necesidades -->
+                        </div>
+                    {% endif %}
+                </div>
 
 
                 
@@ -54,7 +81,9 @@
                     <div class="col-xl-6">
                         <div class="text-center text-white">
                             <!-- Page heading-->
-                            <h1 class="mb-5">paraaaaaaaaa</h1>
+                            <h1 class="mb-5">Bienvenido a Conectar.Idiomas</h1>
+                            <br>
+                            <h2>"Tu viaje multilingüe comienza aquí"</h2>
                            
                             </form>
                         </div>

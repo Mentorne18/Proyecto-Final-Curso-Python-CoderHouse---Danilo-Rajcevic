@@ -1,29 +1,114 @@
 <!DOCTYPE html>
+
+{% load static %}
+
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursos_List</title>
-</head>
-<body>
-    <h1>Cursos de Coder - Python</h1>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Conectar.Idiomas</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'AppCoder/css/styles.css' %}" rel="stylesheet" />
+
+        <style>
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-toggle::after {
+            content: '\25BC';
+            margin-left: 5px;
+            font-size: 5px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+    </style>
+    </head>
+    <body>
+        <!-- Navigation-->
+        <nav class="navbar navbar-light bg-light static-top">
+            <div class="container">
+                
+                <a class="btn btn-primary" href="{% url 'Inicio' %}">Inicio</a>
+                <a class="btn btn-primary" href="{% url 'List' %}">Cursos</a>
+                <a class="btn btn-primary" href="{% url 'Profesores' %}">Profesores</a>
+                <a class="btn btn-primary" href="{% url 'Estudiantes' %}">Estudiantes</a>
+                <a class="btn btn-primary" href="{% url 'mensajes' %}">Contacto</a>
+                <a class="btn btn-primary" href="{% url 'AcercaDeMi' %}">Acerca de Mí</a>
+
+
+                <div class="dropdown">
+                    {% if request.user.is_authenticated %}
+                        <p class="text-muted small mb-4 mb-1g-0 dropdown-toggle" data-toggle="dropdown">Hola, {{ user.username }}</p>
+                        <div class="dropdown-menu">
+                            <!-- Agrega las opciones del menú desplegable -->
+                            <a class="dropdown-item" href="{% url 'Logout' %}">Logout</a> <!-- Opción de Logout -->
+                            <a class="dropdown-item" href="agregarAvatar">Cambiar Avatar</a> 
+                            <a class="dropdown-item" href="{% url 'EditarPerfil' %}">Editar Perfil</a> 
+                            <!-- Puedes agregar más opciones según tus necesidades -->
+                        </div>
+                    {% endif %}
+                </div>
+                
+
+
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container position-relative">
+                <div class="row justify-content-center">
+                    <div class="col-xl-6">
+                        <div class="text-center text-white">
+                            <!-- Page heading-->
+                            <h1 class="mb-5">CURSOS</h1>
+                            <h2>"Tu viaje multilingüe comienza aquí"</h2>
+                           
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <h1>Cursos de la Plataforma</h1>
     <ul>
         {% for curso in object_list %}
-
             <li>
                 <p>NOMBRE: {{ curso.nombre }} </p>
                 <p>
-
                     <a href="{% url 'Detail' curso.id %}">Ver</a>
-                    <a href="{% url 'Edit' curso.id %}">Editar</a>
-                    <a href="{% url 'Delete' curso.id %}">Borrar</a>
-
+                    {% if user.is_superuser %}
+                        <a href="{% url 'Edit' curso.id %}">Editar</a>
+                        <a href="{% url 'Delete' curso.id %}">Borrar</a>
+                    {% endif %}
                 </p>
-
-
             </li>
-
         {% endfor %}
     </ul>
-</body>
-</html>
+    {% if user.is_superuser %}
+    <h2>Crear Nuevo Curso</h2>
+    <form method="post" action="{% url 'New' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Crear Curso</button>
+    </form>
+    {% endif %}

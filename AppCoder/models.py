@@ -45,3 +45,18 @@ class Avatar(models.Model):
     
     def __str__(self):
         return f"{self.user} - {self.imagen}"
+    
+    
+def is_superuser(self):
+    # La lógica para determinar si un usuario es un superusuario
+    return self.is_staff and self.is_superuser
+
+# Agregar la función como un método al modelo User
+User.add_to_class("is_superuser", is_superuser)
+    
+
+class Mensaje(models.Model):
+    mensaje = models.TextField()
+
+    def __str__(self):
+        return self.mensaje
