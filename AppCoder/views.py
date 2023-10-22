@@ -47,7 +47,15 @@ from .forms import *
 def inicio(request):
     avatares = Avatar.objects.filter(user=request.user.id)
     
-    return render(request, "appCoder/index.html", {"url":avatares[0].imagen.url})
+    if avatares.exists():
+        url = avatares[0].imagen.url
+    else:
+        # Puedes definir una URL de imagen por defecto o mostrar un mensaje de que no hay avatar.
+        url = '/ruta/imagen/por/defecto.jpg'
+    
+    return render(request, "appCoder/index.html", {"url": url})
+
+    
 
 # def cursos(request):
     
@@ -394,13 +402,36 @@ def registrarProfesor(request):
         miFormulario = ProfesorFormulario(request.POST)
 
         if miFormulario.is_valid():
-            miFormulario.save()  # Guarda el profesor en la base de datos
+            # Guarda los datos del formulario en la base de datos
+            profesor = Profesor(
+                nombre=miFormulario.cleaned_data['nombre'],
+                apellido=miFormulario.cleaned_data['apellido'],
+                email=miFormulario.cleaned_data['email'],
+                profesion=miFormulario.cleaned_data['profesion']
+            )
+            profesor.save()
+
             return redirect('Inicio')  # Redirige al usuario a la página de inicio después de registrar al profesor
 
     else:
         miFormulario = ProfesorFormulario()
 
-    return render(request, "AppCoder/index.html", {"miFormulario": miFormulario})
+    return render(request, "index.html", {"miFormulario": miFormulario})
+
+
+def registrar_alumno(request):
+    if request.method == "POST":
+        miFormulario = EstudianteFormulario(request.POST)  # Aquí usamos el formulario de estudiantes
+
+        if miFormulario.is_valid():
+            # Guarda los datos del formulario en la base de datos
+            miFormulario.save()
+            return redirect('Inicio')  # Redirige al usuario a la página de inicio después de registrar al estudiante
+
+    else:
+        miFormulario = EstudianteFormulario()
+
+    return render(request, "index.html", {"miFormulario": miFormulario})
 
 
 

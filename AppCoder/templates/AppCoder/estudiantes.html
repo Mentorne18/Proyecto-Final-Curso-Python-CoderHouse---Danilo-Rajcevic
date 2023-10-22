@@ -88,48 +88,28 @@
             </div>
         </header>
 
-        {% if miFormulario.errors %}
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Registrar Estudiante</title>
+        </head>
+        <body>
+            <h1>¿Estás interesado en ser estudiante en nuestra academia?</h1>
+            <h3>¡Regístrate ahora y forma parte de nuestra comunidad académica!</h3>
+            <br>
+        
+            <form method="post">
+                {% csrf_token %}
+                {{ miFormulario.nombre.label_tag }} {{ miFormulario.nombre }}
+                {{ miFormulario.apellido.label_tag }} {{ miFormulario.apellido }}
+                {{ miFormulario.email.label_tag }} {{ miFormulario.email }}
+                <input type="submit" value="Registrar">
+            </form>
+        
+            <a href="{% url 'Inicio' %}">Volver al Inicio</a>
+        </body>
 
-    <p style="color: red;">Estan mal los datos, revisar.</p>
-
-    {% endif %}
-
-    <form action="" method="POST">{% csrf_token %}
-
-        <!-- Acá está la magia de Django -->
-<h2>Queres anotarte en alguno de nuestros cursos? Inscrite como alumno!</h2>
-        <table>
-
-            {{ miFormulario.as_table }}
-
-        </table>
-
-        <input type="submit" value="Enviar">
-
-
-    </form>
-
-    <div id="mensaje-confirmacion" style="display: none;">
-        Te has registrado como alumno. Redirigiendo al inicio...
-    </div>
-    <script>
-        // Obtén el formulario y el elemento de confirmación
-        var formulario = document.querySelector('form');
-        var mensajeConfirmacion = document.getElementById('mensaje-confirmacion');
     
-        // Agrega un evento de escucha para el envío del formulario
-        formulario.addEventListener('submit', function (event) {
-            event.preventDefault();  // Evita que se envíe el formulario de forma predeterminada
-    
-            // Muestra el mensaje de confirmación
-            mensajeConfirmacion.style.display = 'block';
-    
-            // Puedes redirigir al usuario después de unos segundos
-            setTimeout(function() {
-                window.location.href = "{% url 'Inicio' %}"; // Cambia 'Login' por la URL de tu página de inicio o login
-            }, 3000); // 3000 milisegundos (3 segundos)
-        });
-    </script>
 {% if user.is_superuser %}    
 <h2>Lista Estudiantes:</h2>
 <ul>

@@ -38,6 +38,8 @@ urlpatterns = [
     path("mensajes/", views.vista_mensajes, name="mensajes"),
     path("guardar_mensaje/", views.guardar_mensaje, name="guardar_mensaje"),
     path('profesores_lista/', views.profesores_lista, name='profesores_lista'),
+    path('registrar_profesor/', views.registrarProfesor, name='registrar_profesor'),
+    path('registrar_alumno/', views.registrar_alumno, name='registrar_alumno'),
 
 
 ]

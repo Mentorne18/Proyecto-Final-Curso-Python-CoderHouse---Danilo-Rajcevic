@@ -89,45 +89,31 @@
                 </div>
             </div>
         </header>
-        {% if miFormulario.errors %}
-
-    <p style="color: red;">Estan mal los datos, revisar.</p>
-
-    {% endif %}
-
-    <form action="" method="POST">{% csrf_token %}
-
-        <!-- Acá está la magia de Django -->
-<h2>Estás interesado en dar clases online? Inscribite como profesor!</h2>
-        <table>
-
-            {{ miFormulario.as_table }}
-
-        </table>
-
-        <input type="submit" value="Enviar">
-
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Profesor</title>
+</head>
+<body>
+    <h1>Estas interesado en dar clases en nuestro instituto?</h1>
+    <h3>No dudes más, anotate hoy mismo como profesor de la academia.</h3>
+    <br>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ miFormulario.nombre.label_tag }} {{ miFormulario.nombre }}
+        {{ miFormulario.apellido.label_tag }} {{ miFormulario.apellido }}
+        {{ miFormulario.email.label_tag }} {{ miFormulario.email }}
+        {{ miFormulario.profesion.label_tag }} {{ miFormulario.profesion }}
+        <input type="submit" value="Registrar">
     </form>
-    <div id="success-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <h2>Felicidades</h2>
-            <p>Te inscribiste como profesor.</p>
-        </div>
-    </div>
     
-    <script>
-        const form = document.querySelector('form');
-        form.addEventListener('submit', (e) => {
-            e.preventDefault(); 
-            // Muestra el mensaje emergente
-            document.getElementById('success-modal').style.display = 'block';
-    
-            // Redirige al índice después de 3 segundos
-            setTimeout(function() {
-                window.location.href = "{% url 'Inicio' %}";
-            }, 3000); // 3000 milisegundos = 3 segundos
-        });
-    </script>
-    {% if user.is_superuser %} 
-    <h2><a href="{% url 'profesores_lista' %}">Ver Profesores</a></h2>
-    {% endif %} 
+    <a href="{% url 'Inicio' %}">Volver al Inicio</a>
+</body>
+</html>
+
+{% if user.is_superuser %} 
+<h2><a href="{% url 'profesores_lista' %}">Ver Profesores</a></h2>
+{% endif %}
